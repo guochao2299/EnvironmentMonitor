@@ -7,6 +7,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace EnvironmentMonitor
 {
@@ -25,6 +26,49 @@ namespace EnvironmentMonitor
         private void frmMain_Load(object sender, EventArgs e)
         {
             InitSerialPortInfo();
+            InitChart();
+        }
+
+        private static string[] DATATYPE = { "湿度", "温度","火焰值","烟雾值" };
+
+        private void InitChart()
+        {
+            chtData.DataSource = environmentRecordBindingSource.List;
+
+            //定义表区域
+            chtData.ChartAreas.Clear();
+            ChartArea chartarea = new ChartArea("数据趋势图");
+            chtData.ChartAreas.Add(chartarea);
+
+            //定义存储和显示点的容器
+            chtData.Series.Clear();
+            for (int i = 0; i < 4; i++)
+            {
+                Series series = new Series(DATATYPE[i]);
+                chtData.Series.Add(series);
+                series.ChartArea = "数据趋势图";
+                series.ChartType = SeriesChartType.Spline;
+                series.MarkerBorderWidth = 2;
+                series.MarkerSize = 4;
+                series.MarkerStyle = MarkerStyle.Diamond;
+                series.ToolTip = DATATYPE[i] + "#VAL \r\n #AXISLABEL";
+            }
+        }
+
+        private void ResetChartData()
+        {
+            for (int i = 0; i < chtData.Series.Count; i++)
+            {
+                chtData.Series[i].Points.Clear();
+            }
+        }
+
+        private void AddData(EnvironmentRecord er)
+        {
+            chtData.Series[0].Points.AddY(er.Humidity);
+            chtData.Series[1].Points.AddY(er.Temperature);
+            chtData.Series[2].Points.AddY(er.FlameValue);
+            chtData.Series[3].Points.AddY(er.MQValue);
         }
 
         private void InitSerialPortInfo()
@@ -139,6 +183,8 @@ namespace EnvironmentMonitor
                 m_db.SubmitChanges();
 
                 environmentRecordBindingSource.Insert(0,er);
+
+                AddData(er);
             }
         }
 

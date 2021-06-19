@@ -30,9 +30,14 @@ namespace EnvironmentMonitor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lblMQ = new System.Windows.Forms.Label();
+            this.lblFlameWaring = new System.Windows.Forms.Label();
             this.btnClosePort = new System.Windows.Forms.Button();
             this.btnOpenPort = new System.Windows.Forms.Button();
             this.comboSerialPort = new System.Windows.Forms.ComboBox();
@@ -47,8 +52,11 @@ namespace EnvironmentMonitor
             this.flameValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mQValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.environmentRecordBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.lblFlameWaring = new System.Windows.Forms.Label();
-            this.lblMQ = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.chtData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -56,6 +64,13 @@ namespace EnvironmentMonitor
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.environmentRecordBindingSource)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chtData)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -93,10 +108,34 @@ namespace EnvironmentMonitor
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dgvRecords);
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Size = new System.Drawing.Size(1063, 428);
             this.splitContainer1.SplitterDistance = 46;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // lblMQ
+            // 
+            this.lblMQ.AutoSize = true;
+            this.lblMQ.BackColor = System.Drawing.Color.Red;
+            this.lblMQ.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblMQ.Location = new System.Drawing.Point(739, 10);
+            this.lblMQ.Name = "lblMQ";
+            this.lblMQ.Size = new System.Drawing.Size(285, 24);
+            this.lblMQ.TabIndex = 4;
+            this.lblMQ.Text = "注意！检测到可燃气体！";
+            this.lblMQ.Visible = false;
+            // 
+            // lblFlameWaring
+            // 
+            this.lblFlameWaring.AutoSize = true;
+            this.lblFlameWaring.BackColor = System.Drawing.Color.Red;
+            this.lblFlameWaring.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblFlameWaring.Location = new System.Drawing.Point(482, 10);
+            this.lblFlameWaring.Name = "lblFlameWaring";
+            this.lblFlameWaring.Size = new System.Drawing.Size(235, 24);
+            this.lblFlameWaring.TabIndex = 3;
+            this.lblFlameWaring.Text = "注意！检测到火焰！";
+            this.lblFlameWaring.Visible = false;
             // 
             // btnClosePort
             // 
@@ -154,12 +193,12 @@ namespace EnvironmentMonitor
             this.mQValueDataGridViewTextBoxColumn});
             this.dgvRecords.DataSource = this.environmentRecordBindingSource;
             this.dgvRecords.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvRecords.Location = new System.Drawing.Point(0, 0);
+            this.dgvRecords.Location = new System.Drawing.Point(3, 3);
             this.dgvRecords.Name = "dgvRecords";
             this.dgvRecords.ReadOnly = true;
             this.dgvRecords.RowHeadersWidth = 25;
             this.dgvRecords.RowTemplate.Height = 27;
-            this.dgvRecords.Size = new System.Drawing.Size(1063, 378);
+            this.dgvRecords.Size = new System.Drawing.Size(1049, 343);
             this.dgvRecords.TabIndex = 0;
             // 
             // iDDataGridViewTextBoxColumn
@@ -238,29 +277,71 @@ namespace EnvironmentMonitor
             // 
             this.environmentRecordBindingSource.DataSource = typeof(EnvironmentMonitor.EnvironmentRecord);
             // 
-            // lblFlameWaring
+            // tabControl1
             // 
-            this.lblFlameWaring.AutoSize = true;
-            this.lblFlameWaring.BackColor = System.Drawing.Color.Red;
-            this.lblFlameWaring.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblFlameWaring.Location = new System.Drawing.Point(482, 10);
-            this.lblFlameWaring.Name = "lblFlameWaring";
-            this.lblFlameWaring.Size = new System.Drawing.Size(235, 24);
-            this.lblFlameWaring.TabIndex = 3;
-            this.lblFlameWaring.Text = "注意！检测到火焰！";
-            this.lblFlameWaring.Visible = false;
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1063, 378);
+            this.tabControl1.TabIndex = 1;
             // 
-            // lblMQ
+            // tabPage1
             // 
-            this.lblMQ.AutoSize = true;
-            this.lblMQ.BackColor = System.Drawing.Color.Red;
-            this.lblMQ.Font = new System.Drawing.Font("宋体", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblMQ.Location = new System.Drawing.Point(739, 10);
-            this.lblMQ.Name = "lblMQ";
-            this.lblMQ.Size = new System.Drawing.Size(285, 24);
-            this.lblMQ.TabIndex = 4;
-            this.lblMQ.Text = "注意！检测到可燃气体！";
-            this.lblMQ.Visible = false;
+            this.tabPage1.Controls.Add(this.dgvRecords);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1055, 349);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "数据集合";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.splitContainer2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1055, 349);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "数据趋势图";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.chtData);
+            this.splitContainer2.Panel2Collapsed = true;
+            this.splitContainer2.Size = new System.Drawing.Size(1049, 343);
+            this.splitContainer2.SplitterDistance = 910;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // chtData
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chtData.ChartAreas.Add(chartArea1);
+            this.chtData.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chtData.Legends.Add(legend1);
+            this.chtData.Location = new System.Drawing.Point(0, 0);
+            this.chtData.Name = "chtData";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "温度";
+            this.chtData.Series.Add(series1);
+            this.chtData.Size = new System.Drawing.Size(1049, 343);
+            this.chtData.TabIndex = 0;
+            this.chtData.Text = "chart1";
             // 
             // frmMain
             // 
@@ -284,6 +365,13 @@ namespace EnvironmentMonitor
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.environmentRecordBindingSource)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chtData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,6 +398,11 @@ namespace EnvironmentMonitor
         private System.Windows.Forms.DataGridViewTextBoxColumn mQValueDataGridViewTextBoxColumn;
         private System.Windows.Forms.Label lblMQ;
         private System.Windows.Forms.Label lblFlameWaring;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chtData;
     }
 }
 
